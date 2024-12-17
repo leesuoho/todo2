@@ -18,11 +18,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserCreateResponseDto createUser(UserCreateRequestDto requestDto) {
-
-        User user = new User(requestDto.getUsername(), requestDto.getEmail());
-
+        User user = new User(requestDto.getUsername(), requestDto.getEmail(), requestDto.getPassword());
         User savedUser = userRepository.save(user);
-
         return new UserCreateResponseDto(savedUser);
     }
 
@@ -42,7 +39,7 @@ public class UserService {
     public UserResponseDto updateUser(Long id, UserCreateRequestDto requestDto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 유저를 찾을 수 없습니다: " + id));
-        user.update(requestDto.getUsername(), requestDto.getEmail());
+        user.update(requestDto.getUsername(), requestDto.getEmail(), requestDto.getPassword());
         User updatedUser = userRepository.save(user);
         return new UserResponseDto(updatedUser);
     }
