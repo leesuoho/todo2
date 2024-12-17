@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Entity
 @Table(name = "todos")
-public class Todo extends BaseEntitiy {
+public class Todo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
