@@ -46,4 +46,15 @@ public class TodoService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정을 찾을 수 없습니다: " + id));
         return new TodoResponseDto(todo);
     }
+
+    public TodoResponseDto updateTodo(Long id, TodoCreateRequestDto requestDto) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정을 찾을 수 없습니다: " + id));
+
+        todo.setTitle(requestDto.getTitle());
+        todo.setContents(requestDto.getContents());
+
+        Todo updatedTodo = todoRepository.save(todo);
+        return new TodoResponseDto(updatedTodo);
+    }
 }
