@@ -5,6 +5,7 @@ import com.assignment.todo.dto.UserCreateResponseDto;
 import com.assignment.todo.dto.UserResponseDto;
 import com.assignment.todo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +40,11 @@ public class UserController {
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserCreateRequestDto requestDto) {
         UserResponseDto responseDto = userService.updateUser(id, requestDto);
         return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
