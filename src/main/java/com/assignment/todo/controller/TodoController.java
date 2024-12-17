@@ -5,6 +5,7 @@ import com.assignment.todo.dto.TodoCreateResponseDto;
 import com.assignment.todo.dto.TodoResponseDto;
 import com.assignment.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +40,11 @@ public class TodoController {
     public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable Long id, @RequestBody TodoCreateRequestDto requestDto) {
         TodoResponseDto responseDto = todoService.updateTodo(id, requestDto);
         return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
+        todoService.deleteTodo(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

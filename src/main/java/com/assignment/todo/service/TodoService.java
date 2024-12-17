@@ -57,4 +57,10 @@ public class TodoService {
         Todo updatedTodo = todoRepository.save(todo);
         return new TodoResponseDto(updatedTodo);
     }
+
+    public void deleteTodo(Long id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정을 찾을 수 없습니다: " + id));
+        todoRepository.delete(todo);
+    }
 }
