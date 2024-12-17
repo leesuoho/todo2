@@ -1,7 +1,9 @@
 package com.assignment.todo.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "todos")
 public class Todo extends BaseEntitiy {
