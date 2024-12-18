@@ -1,5 +1,6 @@
 package com.assignment.todo.controller;
 
+import com.assignment.todo.dto.ApiResponse;
 import com.assignment.todo.dto.TodoCreateRequestDto;
 import com.assignment.todo.dto.TodoCreateResponseDto;
 import com.assignment.todo.dto.TodoResponseDto;
@@ -25,9 +26,12 @@ public class TodoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TodoResponseDto>> getAllTodos() {
+    public ResponseEntity<ApiResponse<List<TodoResponseDto>>> getAllTodos() {
         List<TodoResponseDto> responseDtoList = todoService.getAllTodos();
-        return ResponseEntity.ok(responseDtoList);
+        if (responseDtoList.isEmpty()) {
+            return ResponseEntity.ok(new ApiResponse<>("No todos found", responseDtoList));
+        }
+        return ResponseEntity.ok(new ApiResponse<>("Success", responseDtoList));
     }
 
     @GetMapping("/{id}")
