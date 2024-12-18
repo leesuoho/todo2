@@ -20,7 +20,6 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
-    private final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
 
     public TodoCreateResponseDto createTodo(TodoCreateRequestDto requestDto) {
         User user = userRepository.findById(requestDto.getUserId())
