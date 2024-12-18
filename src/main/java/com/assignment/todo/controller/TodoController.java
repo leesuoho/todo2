@@ -38,6 +38,9 @@ public class TodoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable Long id, @RequestBody TodoCreateRequestDto requestDto) {
+        if (!id.equals(requestDto.getId())) {
+            throw new IllegalArgumentException("URL ID와 Body ID가 일치하지 않습니다.");
+        }
         TodoResponseDto responseDto = todoService.updateTodo(id, requestDto);
         return ResponseEntity.ok(responseDto);
     }
