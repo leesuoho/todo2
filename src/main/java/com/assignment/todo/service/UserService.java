@@ -1,5 +1,6 @@
 package com.assignment.todo.service;
 
+import com.assignment.todo.dto.LoginResponseDto;
 import com.assignment.todo.dto.UserCreateRequestDto;
 import com.assignment.todo.dto.UserCreateResponseDto;
 import com.assignment.todo.dto.UserResponseDto;
@@ -48,5 +49,16 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 유저를 찾을 수 없습니다: " + id));
         userRepository.delete(user);
+    }
+
+    public LoginResponseDto login(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 이메일입니다."));
+
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        return new LoginResponseDto(user.getId(), user.getUsername());
     }
 }

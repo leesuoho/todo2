@@ -1,9 +1,9 @@
 package com.assignment.todo.controller;
 
-import com.assignment.todo.dto.UserCreateRequestDto;
-import com.assignment.todo.dto.UserCreateResponseDto;
-import com.assignment.todo.dto.UserResponseDto;
+import com.assignment.todo.dto.*;
 import com.assignment.todo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +46,23 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletRequest request) {
+
+        LoginResponseDto responseDto = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        HttpSession session = request.getSession();
+        session.setAttribute("user", responseDto);
+        return ResponseEntity.ok("로그인 성공");
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return ResponseEntity.ok("로그아웃 성공");
     }
 }

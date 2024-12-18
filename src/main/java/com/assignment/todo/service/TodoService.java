@@ -8,7 +8,6 @@ import com.assignment.todo.entity.User;
 import com.assignment.todo.repository.TodoRepository;
 import com.assignment.todo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
