@@ -10,6 +10,7 @@ import com.assignment.todo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class TodoService {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public TodoCreateResponseDto createTodo(TodoCreateRequestDto requestDto) {
         User user = userRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 유저를 찾을 수 없습니다: " + requestDto.getUserId()));
@@ -34,18 +36,21 @@ public class TodoService {
         return new TodoCreateResponseDto(savedTodo);
     }
 
+    @Transactional
     public List<TodoResponseDto> getAllTodos() {
         return todoRepository.findAll().stream()
                 .map(TodoResponseDto::new)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public TodoResponseDto getTodoById(Long id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정을 찾을 수 없습니다: " + id));
         return new TodoResponseDto(todo);
     }
 
+    @Transactional
     public TodoResponseDto updateTodo(Long id, TodoCreateRequestDto requestDto) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정을 찾을 수 없습니다: " + id));
@@ -57,6 +62,7 @@ public class TodoService {
         return new TodoResponseDto(updatedTodo);
     }
 
+    @Transactional
     public void deleteTodo(Long id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정을 찾을 수 없습니다: " + id));
