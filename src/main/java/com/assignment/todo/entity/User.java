@@ -43,8 +43,8 @@ public class User extends BaseEntity {
      * mappedBy = "user": Todo 엔티티의 'user' 필드에 의해 매핑됨
      * 초기화: 빈 ArrayList로 초기화하여 NPE(Null Pointer Exception)를 방지
      */
-    @OneToMany(mappedBy = "user")
-    private List<Todo> todos = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Todo> todos = new ArrayList<>();
 
     /**
      * 기본 생성자: JPA 스펙에서 엔티티는 기본 생성자를 요구
