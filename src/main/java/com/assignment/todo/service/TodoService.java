@@ -38,10 +38,10 @@ public class TodoService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 유저를 찾을 수 없습니다: " + requestDto.getUserId()));
 
         // Todo 객체를 생성하고 값을 설정
-        Todo todo = new Todo();
-        todo.setTitle(requestDto.getTitle());
-        todo.setContents(requestDto.getContents());
-        todo.setUser(user); // User를 설정
+        Todo todo = new Todo(requestDto.getTitle(), requestDto.getContents(), user);
+//        todo.setTitle(requestDto.getTitle());
+//        todo.setContents(requestDto.getContents());
+//        todo.setUser(user); // User를 설정
 
         // 저장된 Todo를 반환
         Todo savedTodo = todoRepository.save(todo);

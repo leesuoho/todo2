@@ -8,7 +8,6 @@ import lombok.Setter;
  * 클라이언트가 로그인할 때 이메일과 비밀번호를 서버에 전달하는데 사용
  */
 @Getter
-@Setter
 public class LoginRequestDto {
     private String email;
     private String password;
