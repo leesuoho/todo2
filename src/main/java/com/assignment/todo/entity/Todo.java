@@ -26,7 +26,7 @@ public class Todo extends BaseEntity {
      * @Column(nullable = false): 이 필드는 null 값을 허용하지 않음
      */
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String title;
 
     /**

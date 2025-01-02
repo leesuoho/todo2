@@ -27,13 +27,13 @@ public class User extends BaseEntity {
     /**
      * @Column(nullable = false): 이 필드는 null 값을 허용하지 않음
      */
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String password;
 
     /**
