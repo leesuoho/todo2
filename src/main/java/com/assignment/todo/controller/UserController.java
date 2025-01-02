@@ -4,12 +4,17 @@ import com.assignment.todo.dto.*;
 import com.assignment.todo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * UserController는 사용자 관련 요청을 처리하는 REST API 컨트롤러입니다.
@@ -21,6 +26,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService; // 사용자 비즈니스 로직을 처리하는 서비스 클래스
+    private final DefaultErrorAttributes errorAttributes;
 
     /**
      * 새로운 사용자를 생성합니다.
@@ -29,7 +35,7 @@ public class UserController {
      * @return 생성된 사용자 정보를 담은 응답 객체
      */
     @PostMapping
-    public ResponseEntity<ApiResponse<UserCreateResponseDto>> createUser(@RequestBody UserCreateRequestDto requestDto) {
+    public ResponseEntity<ApiResponse<UserCreateResponseDto>> createUser(@Valid @RequestBody UserCreateRequestDto requestDto) {
         UserCreateResponseDto responseDto = userService.createUser(requestDto);
         return ResponseEntity.ok(new ApiResponse<>("회원가입 되었습니다.", responseDto)); // HTTP 상태 코드 200과 함께 응답 데이터
     }
