@@ -29,9 +29,9 @@ public class UserController {
      * @return 생성된 사용자 정보를 담은 응답 객체
      */
     @PostMapping
-    public ResponseEntity<UserCreateResponseDto> createUser(@RequestBody UserCreateRequestDto requestDto) {
+    public ResponseEntity<ApiResponse<UserCreateResponseDto>> createUser(@RequestBody UserCreateRequestDto requestDto) {
         UserCreateResponseDto responseDto = userService.createUser(requestDto);
-        return ResponseEntity.ok(responseDto); // HTTP 상태 코드 200과 함께 응답 데이터
+        return ResponseEntity.ok(new ApiResponse<>("회원가입 되었습니다.", responseDto)); // HTTP 상태 코드 200과 함께 응답 데이터
     }
 
     /**
@@ -40,9 +40,9 @@ public class UserController {
      * @return 모든 사용자 목록을 포함한 응답 객체
      */
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+    public ResponseEntity<ApiResponse<List<UserResponseDto>>> getAllUsers() {
         List<UserResponseDto> responseDtoList = userService.getAllUsers();
-        return ResponseEntity.ok(responseDtoList); // 사용자 목록을 HTTP 상태 코드 200과 함께 반환
+        return ResponseEntity.ok(new ApiResponse<>("회원정보가 조회되었습니다.", responseDtoList)); // 사용자 목록을 HTTP 상태 코드 200과 함께 반환
     }
 
     /**
@@ -52,9 +52,9 @@ public class UserController {
      * @return 해당 사용자의 정보를 포함한 응답 객체
      */
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUser(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<UserResponseDto>> getUser(@PathVariable Long id) {
         UserResponseDto responseDto = userService.getUserById(id);
-        return ResponseEntity.ok(responseDto); // 조회된 사용자 정보를 반환
+        return ResponseEntity.ok(new ApiResponse<>("회원정보가 조회되었습니다.", responseDto)); // 조회된 사용자 정보를 반환
     }
 
     /**
@@ -65,9 +65,9 @@ public class UserController {
      * @return 수정된 사용자 정보를 포함한 응답 객체
      */
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserCreateRequestDto requestDto) {
+    public ResponseEntity<ApiResponse<UserResponseDto>> updateUser(@PathVariable Long id, @RequestBody UserCreateRequestDto requestDto) {
         UserResponseDto responseDto = userService.updateUser(id, requestDto);
-        return ResponseEntity.ok(responseDto); // 수정된 사용자 정보를 반환
+        return ResponseEntity.ok(new ApiResponse<>("회원정보가 변경되었습니다.", responseDto)); // 수정된 사용자 정보를 반환
     }
 
     /**
@@ -77,9 +77,9 @@ public class UserController {
      * @return HTTP 상태 코드 200을 반환
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id); // 사용자 삭제 요청 처리
-        return new ResponseEntity<>(HttpStatus.OK); // 삭제가 성공적으로 처리된 경우 200 반환
+        return ResponseEntity.ok(new ApiResponse<>("계정이 삭제되었습니다.", null)); // 삭제가 성공적으로 처리된 경우 200 반환
     }
 
     /**
@@ -90,7 +90,7 @@ public class UserController {
      * @return 로그인 성공 메시지
      */
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<LoginResponseDto>> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletRequest request) {
         // 로그인 요청을 처리하고 응답을 생성
         LoginResponseDto responseDto = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
@@ -98,7 +98,7 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute("user", responseDto);
 
-        return ResponseEntity.ok("로그인 성공"); // 로그인 성공 메시지 반환
+        return ResponseEntity.ok(new ApiResponse<>("로그인 성공", responseDto)); // 로그인 성공 메시지 반환
     }
 
     /**
@@ -108,12 +108,12 @@ public class UserController {
      * @return 로그아웃 성공 메시지
      */
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<String>> logout(HttpServletRequest request) {
         // 현재 세션이 존재하면 무효화하여 로그아웃 처리
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate(); // 세션 무효화
         }
-        return ResponseEntity.ok("로그아웃 성공"); // 로그아웃 성공 메시지 반환
+        return ResponseEntity.ok(new ApiResponse<>("로그아웃 성공", null)); // 로그아웃 성공 메시지 반환
     }
 }
