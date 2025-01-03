@@ -7,14 +7,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * UserController는 사용자 관련 요청을 처리하는 REST API 컨트롤러입니다.
@@ -26,7 +22,6 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService; // 사용자 비즈니스 로직을 처리하는 서비스 클래스
-    private final DefaultErrorAttributes errorAttributes;
 
     /**
      * 새로운 사용자를 생성합니다.
